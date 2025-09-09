@@ -25,7 +25,7 @@ III. Synchronization:
 
 IV: Synchronization Configuration:
 
-   6. Replicator
+   7. Replicator
 
 
 ## Results:
