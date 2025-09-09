@@ -1,0 +1,103 @@
+
+services:
+  # 1. SQL Server: A fonte de dados
+  sqlserver:
+    build: ./sqlserver
+    #image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongPassword!      
+      - MSSQL_AGENT_ENABLED=true      
+      - MSSQL_PID=Standard      
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+
+  # 2. MongoDB: O destino dos dados replicados
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --eval 'db.runCommand({ ping: 1 })'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5      
+
+  # 3. Zookeeper: Necessário para o Kafka
+  zookeeper:
+    image: quay.io/debezium/zookeeper:2.3
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+
+  # 4. Kafka: A plataforma de streaming de dados
+  kafka:
+    image: quay.io/debezium/kafka:2.3
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+
+  # 5. Kafka Connect: Onde o conector do Debezium será executado
+  kafka-connect:
+    build: ./kafka-connect
+    container_name: kafka-connect
+    ports:
+      - "8083:8083"
+    links:
+      - kafka
+      - sqlserver
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+      - CONNECT_LOG4J_PROPERTIES_FILE=/kafka/config/log4j.properties
+    depends_on:
+      kafka:
+        condition: service_started
+      sqlserver:
+        condition: service_started
+
+  # 6. Kafka UI: Ambiente de visualização
+  kafka-ui:
+    image: kafbat/kafka-ui:latest    
+    container_name: kafka-ui
+    restart: unless-stopped
+    ports:
+      # Expose the Kafka UI port to the host machine.
+      - "8585:8080"
+    environment:
+      # Define the Kafka cluster that Kafka UI should connect to.      
+      DYNAMIC_CONFIG_ENABLED: "true"
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    depends_on:
+      kafka:
+        condition: service_started
+
+  # 7. Replicator: O novo contêiner que executa o script de configuração.
+  replicator:
+    build: ./replicator
+    container_name: replicator
+    depends_on:
+      sqlserver:
+        condition: service_started
+      kafka-connect:
+        condition: service_started
+
+    restart: "no" # Garante que o contêiner não reinicie após a conclusão                  
+
+volumes:
+  mssql_data:
+  mongodb_data:
