@@ -28,7 +28,10 @@ curl -X POST -H "Content-Type: application/json" --data '{
     "snapshot.mode": "initial",
     "name": "sqlserver-connector",
     "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
-    "schema.history.internal.kafka.topic": "schema-changes-sqlserver-topic"    
+    "schema.history.internal.kafka.topic": "schema-changes-sqlserver-topic",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "true"    
   }
 }' http://kafka-connect:8083/connectors
 
