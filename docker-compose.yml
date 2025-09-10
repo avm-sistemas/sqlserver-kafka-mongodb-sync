@@ -89,14 +89,48 @@ services:
   # 7. Replicator: O novo contêiner que executa o script de configuração.
   replicator:
     build: ./replicator
-    container_name: replicator
+    container_name: replicator    
     depends_on:
       sqlserver:
         condition: service_started
       kafka-connect:
         condition: service_started
 
-    restart: "no" # Garante que o contêiner não reinicie após a conclusão                  
+    restart: "no" # Garante que o contêiner não reinicie após a conclusão     
+
+  # 8. API para leitura do SQL Server
+  api-sqlserver:
+    build: ./api-sqlserver
+    container_name: api-sqlserver
+    restart: unless-stopped
+    environment:
+      DB_HOST: localhost
+      DB_PORT: 1433
+      DB_USER: sa
+      DB_PASSWORD: YourStrongPassword!
+      DB_NAME: cdc_db      
+    links:
+      - sqlserver
+    ports:
+      - 3040:3000
+    depends_on:
+      sqlserver:
+        condition: service_started
+
+  # 9. API para leitura do MongoDB
+  api-mongo:             
+    build: ./api-mongodb
+    container_name: api-mongo
+    restart: unless-stopped
+    environment:
+      MONGODB: mongodb    
+    links:
+      - mongodb
+    ports:
+      - 3030:3000
+    depends_on:
+      mongodb:
+        condition: service_healthy
 
 volumes:
   mssql_data:

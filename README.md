@@ -6,7 +6,7 @@ I created this solution to use the best of both worlds, the storage power of SQL
 
 ## Architecture
 
-It was built in Docker with 7 application layers divided into 4 categories:
+It was built in Docker with 9 application layers divided into 5 categories:
 
 I. Transactional Persistence Database:
 
@@ -25,8 +25,12 @@ III. Synchronization:
 
 IV: Synchronization Configuration:
 
-   6. Replicator
+   7. Replicator
 
+V: Restful Serivces:
+
+   8. Restful API to SQL Server's CRUD
+   9. Restful API to Mongodb's reader
 
 ## Results:
 
