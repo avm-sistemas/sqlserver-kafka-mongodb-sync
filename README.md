@@ -32,6 +32,14 @@ V: Restful Serivces:
    8. Restful API to SQL Server's CRUD
    9. Restful API to Mongodb's reader
 
+## Clone & Run
+
+```
+> git clone https://github.com/avm-sistemas/sqlserver-kafka-mongodb-sync.git
+> cd sqlserver-kafka-mongodb-sync
+> docker-compose up --build -d --force-recreate
+```
+
 ## Results:
 
 ### Docker:

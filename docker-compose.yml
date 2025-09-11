@@ -104,7 +104,7 @@ services:
     container_name: api-sqlserver
     restart: unless-stopped
     environment:
-      DB_HOST: localhost
+      DB_HOST: sqlserver
       DB_PORT: 1433
       DB_USER: sa
       DB_PASSWORD: YourStrongPassword!
@@ -112,7 +112,7 @@ services:
     links:
       - sqlserver
     ports:
-      - 3040:3000
+      - 3020:3020
     depends_on:
       sqlserver:
         condition: service_started
@@ -127,7 +127,7 @@ services:
     links:
       - mongodb
     ports:
-      - 3030:3000
+      - 3030:3030
     depends_on:
       mongodb:
         condition: service_healthy
