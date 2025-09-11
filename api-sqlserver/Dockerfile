@@ -1,6 +1,6 @@
 # ----- Fase 1: Build (Construção) -----
 # Usa uma imagem do Node com a tag "alpine" para um tamanho menor
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
@@ -22,7 +22,7 @@ RUN npm run build
 
 # ----- Fase 2: Produção -----
 # Usa uma imagem do Node mais leve, ideal para produção
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Define o diretório de trabalho
 WORKDIR /app
@@ -33,7 +33,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 # Expõe a porta em que a aplicação vai rodar (padrão do NestJS)
-EXPOSE 3000
+EXPOSE 3020
 
 # Comando para iniciar a aplicação em modo de produção
 CMD ["node", "dist/main"]

@@ -1,7 +1,7 @@
 // src/minha-tabela/minha-tabela.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateMinhaTabelaDto } from './dto/create-minha-tabela.dto';
 import { UpdateMinhaTabelaDto } from './dto/update-minha-tabela.dto';
 import { MinhaTabela } from './entities/minha-tabela.entity';
@@ -36,10 +36,11 @@ export class MinhaTabelaService {
     return this.minhaTabelaRepository.save(registro);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<DeleteResult> {
     const resultado = await this.minhaTabelaRepository.delete(id);
     if (resultado.affected === 0) {
       throw new NotFoundException(`Registro com ID "${id}" não encontrado.`);
     }
+    return resultado;
   }
 }

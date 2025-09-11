@@ -33,7 +33,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 # Expõe a porta em que a aplicação vai rodar (padrão do NestJS)
-EXPOSE 3000
+EXPOSE 3030
 
 # Comando para iniciar a aplicação em modo de produção
 CMD ["node", "dist/main"]

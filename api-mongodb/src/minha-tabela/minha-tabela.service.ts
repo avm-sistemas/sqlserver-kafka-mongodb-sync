@@ -6,7 +6,7 @@ import { MinhaTabelaDto } from './dto/minha-tabela.dto';
 
 @Injectable()
 export class MinhaTabelaService {
-  private readonly logger = new Logger(MinhaTabelaService.name);
+  //private readonly logger = new Logger(MinhaTabelaService.name);
 
   constructor(    
     @InjectModel(MinhaTabela.name) private minhaTabelaModel: Model<MinhaTabelaDocument>

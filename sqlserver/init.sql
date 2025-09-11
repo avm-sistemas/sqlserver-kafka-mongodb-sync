@@ -22,8 +22,9 @@ BEGIN
     IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'MinhaTabela')
     BEGIN
         CREATE TABLE MinhaTabela (
-            ID INT PRIMARY KEY,
-            Nome VARCHAR(100),
+            ID INT IDENTITY(1,1) PRIMARY KEY,
+            Nome VARCHAR(100) NOT NULL,
+            Descricao NVARCHAR(MAX),
             DataCriacao DATETIME DEFAULT GETDATE()
         );
     END

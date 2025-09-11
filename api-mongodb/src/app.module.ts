@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MinhaTabelaModule } from './minha-tabela/minha-tabela.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         uri: `mongodb://${configService.get('MONGODB')}:27017/cdc_db`,
       }),
       inject: [ConfigService],
-    }),            
+    }),
+    MinhaTabelaModule
   ],
   controllers: [AppController],
   providers: [AppService],
