@@ -1,0 +1,28 @@
+# Arquivos de build
+bin/
+obj/
+
+# Arquivos de teste e temporários
+*.trx
+*.vsix
+*.suo
+*.user
+*.suo.old
+*.tmp
+
+# Diretórios de pacotes
+packages/
+node_modules/
+
+# Arquivos de configuração de usuário e IDE
+.idea/
+.vscode/
+
+# Arquivos de cache do Docker
+.docker/
+.dockerignore
+
+# Dados sensíveis (se houver)
+*.env
+*.cer
+*.pfx

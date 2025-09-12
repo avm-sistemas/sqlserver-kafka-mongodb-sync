@@ -1,0 +1,16 @@
+/* wwwroot/custom-swagger.css */
+
+.swagger-ui .topbar {
+    background-color: #007bff;
+    border-bottom: 2px solid #0056b3;
+}
+
+.swagger-ui .topbar .topbar-wrapper a span {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: white;
+}
+
+.swagger-ui .topbar .topbar-wrapper a:hover {
+    text-decoration: none;
+}
