@@ -27,7 +27,7 @@ IV: Synchronization Configuration:
 
    7. Replicator
 
-V: Restful Serivces:
+V: Restful Services:
 
    8. Restful API to SQL Server's CRUD (NestJs)
    9. Restful API to Mongodb's reader (NestJs)
