@@ -29,8 +29,9 @@ IV: Synchronization Configuration:
 
 V: Restful Serivces:
 
-   8. Restful API to SQL Server's CRUD
-   9. Restful API to Mongodb's reader
+   8. Restful API to SQL Server's CRUD (NestJs)
+   9. Restful API to Mongodb's reader (NestJs)
+   10. Restful API to Mongodb's reader (.NET 8)
 
 ## Clone & Run
 
