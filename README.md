@@ -6,7 +6,7 @@ I created this solution to use the best of both worlds, the storage power of SQL
 
 ## Architecture
 
-It was built in Docker with 9 application layers divided into 5 categories:
+It was built in Docker with 10 application layers divided into 5 categories:
 
 I. Transactional Persistence Database:
 
